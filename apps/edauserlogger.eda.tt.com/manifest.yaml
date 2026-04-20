@@ -1,0 +1,66 @@
+apiVersion: core.eda.nokia.com/v1
+kind: Manifest
+metadata:
+  name: edauserlogger
+spec:
+  group: edauserlogger.eda.tt.com
+  version: v1alpha1
+  title: EDA User Logger
+  description: |
+    Audit logging for data center network operations on EDA.
+    Tracks every configuration change made to your network fabric —
+    who made the change, when, from which IP address, and exactly
+    what was modified — with a human-readable flattened diff of each
+    device configuration update. Also records all user sign-in and
+    sign-out activity from the EDA GUI, as well as administrative
+    account and access-control changes in Keycloak (user, group,
+    and role management). All events are written to monthly log
+    files accessible via the EDA UI or a simple HTTP API, making
+    them easy to integrate with your existing SIEM, compliance
+    archival, or change-management workflows. Starts logging
+    automatically upon installation with no additional setup required.
+  author: TT
+  image: ghcr.io/kkayhan/edaapp-userlogger/userlogger-app:v0.3.0
+  supportedCoreVersions:
+    - "v4.0.0-0"
+  appInfo:
+    categories:
+      - integrations
+    documentation: edauserlogger/docs
+    ociSpecVersion: v1.0.0
+    settings: edauserlogger/settings/openapi/eda_oas_edauserlogger.eda.tt.com_appsettings.json
+  components:
+    - crd:
+        api:
+          expose: readWrite
+        path: edauserlogger/crds/edauserlogger.eda.tt.com_userlogconfigs.yaml
+        schema: edauserlogger/openapiv3/eda_oas_edauserlogger.eda.tt.com_userlogconfigs.json
+        namespaced: false
+        ui:
+          category: User Logger
+          name: Config
+        names:
+          kind: UserLogConfig
+          listKind: UserLogConfigList
+          plural: userlogconfigs
+          singular: userlogconfig
+    - cr:
+        path: edauserlogger/manifests/app_deployment.yaml
+    - cr:
+        path: edauserlogger/manifests/pvc.yaml
+    - cr:
+        path: edauserlogger/manifests/service.yaml
+    - cr:
+        path: edauserlogger/manifests/httpproxy.yaml
+    - cr:
+        path: edauserlogger/manifests/rbac.yaml
+  dependencies:
+    - container:
+        name: userlogger-controller
+        image: ghcr.io/kkayhan/edaapp-userlogger/userlogger-controller:v0.3.0
+    - file:
+        path: utils
+    - file:
+        path: common
+    - file:
+        path: edauserlogger/api/v1alpha1/pysrc
