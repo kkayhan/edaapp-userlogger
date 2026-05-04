@@ -20,9 +20,9 @@ spec:
     archival, or change-management workflows. Starts logging
     automatically upon installation with no additional setup required.
   author: TT
-  image: ghcr.io/kkayhan/edaapp-userlogger/userlogger-app:v0.3.0
+  image: ghcr.io/kkayhan/edaapp-userlogger/userlogger-app:v0.4.0
   supportedCoreVersions:
-    - "v4.0.0-0"
+    - "v5.0.0-0"
   appInfo:
     categories:
       - integrations
@@ -55,12 +55,11 @@ spec:
     - cr:
         path: edauserlogger/manifests/rbac.yaml
   dependencies:
-    - container:
-        name: userlogger-controller
-        image: ghcr.io/kkayhan/edaapp-userlogger/userlogger-controller:v0.3.0
     - file:
         path: utils
     - file:
         path: common
     - file:
         path: edauserlogger/api/v1alpha1/pysrc
+    - file:
+        path: edauserlogger/api
