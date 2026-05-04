@@ -50,9 +50,43 @@ The controller starts immediately, enables Keycloak event auditing on your behal
 
 ## Where the logs are
 
-- **EDA UI** — navigate to the **User Logger** resource and open its status to see the current health and the list of log files on disk.
-- **HTTP endpoint** — `https://<your-eda-host>/core/httpproxy/v1/userlogger/logs/` returns a JSON list; append the filename to download a file.
-- **Helper script** — `pull-logs.sh` in the [`logs/`](logs/) directory of this repo downloads everything in one command.
+### HTTP endpoint
+
+Logs are served over the EDA HttpProxy at `https://<your-eda-host>/core/httpproxy/v1/userlogger/logs/`.
+
+**Step 1 — list the available log files.** A `GET` on `/logs/` returns a JSON array of every file currently on disk, with sizes and timestamps:
+
+```bash
+curl -sk https://<your-eda-host>/core/httpproxy/v1/userlogger/logs/
+```
+
+```json
+[
+  {"name": "Transaction-2026-04.log", "size_bytes": 18432, "modified": "2026-04-30T23:59:00Z"},
+  {"name": "Transaction-2026-05.log", "size_bytes":  4221, "modified": "2026-05-04T08:14:12Z"}
+]
+```
+
+**Step 2 — download a specific file.** Append the `name` from the listing to the URL:
+
+```bash
+curl -sk https://<your-eda-host>/core/httpproxy/v1/userlogger/logs/Transaction-2026-05.log
+```
+
+### Helper script
+
+[`logs/pull-logs.sh`](logs/pull-logs.sh) wraps both steps so you can grab everything in one command:
+
+```bash
+# Download every log file into the current directory
+./pull-logs.sh https://<your-eda-host>
+
+# Download every log file into ./audit-archive
+./pull-logs.sh https://<your-eda-host> ./audit-archive
+
+# Download a single named file
+./pull-logs.sh https://<your-eda-host> ./audit-archive Transaction-2026-05.log
+```
 
 ---
 
