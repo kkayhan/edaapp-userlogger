@@ -136,7 +136,7 @@ curl -sk $BASE/healthz
 curl -sk $BASE/logs/
 
 # Download current month's log
-curl -sk $BASE/logs/Transaction-2026-04.log
+curl -sk $BASE/logs/EDA-user-events-2026-05.log
 ```
 
 ### CRD Status
