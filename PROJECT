@@ -1,0 +1,5 @@
+builderVersion: v26.4.1
+domain: eda.tt.com
+name: edauserlog
+registry: ghcr.io/kkayhan/edaapp-userlogger
+vendor: tt

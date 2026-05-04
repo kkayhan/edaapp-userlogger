@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: eda-userlog-fileserver
+  namespace: eda-system
+spec:
+  type: ClusterIP
+  selector:
+    eda.nokia.com/app: eda-edauserlogger
+  ports:
+    - name: http
+      port: 8080
+      targetPort: fileserver

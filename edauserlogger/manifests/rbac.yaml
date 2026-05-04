@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: eda-edauserlogger
+  namespace: eda-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: eda-edauserlogger
+rules:
+  - apiGroups: ["*"]
+    resources: ["*"]
+    verbs: ["*"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: eda-edauserlogger
+subjects:
+  - kind: ServiceAccount
+    name: eda-edauserlogger
+    namespace: eda-system
+roleRef:
+  kind: ClusterRole
+  name: eda-edauserlogger
+  apiGroup: rbac.authorization.k8s.io
