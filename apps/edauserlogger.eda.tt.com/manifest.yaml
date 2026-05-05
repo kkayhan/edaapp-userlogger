@@ -20,7 +20,7 @@ spec:
     archival, or change-management workflows. Starts logging
     automatically upon installation with no additional setup required.
   author: TT
-  image: ghcr.io/kkayhan/edaapp-userlogger/userlogger-app:v0.5.0
+  image: ghcr.io/kkayhan/edaapp-userlogger/userlogger-app:v0.6.0
   supportedCoreVersions:
     - "v5.0.0-0"
   appInfo:
